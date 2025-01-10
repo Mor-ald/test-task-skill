@@ -5,7 +5,7 @@ import axios from "axios";
  * @param dateStart - Fetch from this date (YYYY-MM-DD)
  * @param dateEnd - Fetch to this date (YYYY-MM-DD)
  */
-export async function fetchCallsData(dateStart: string, dateEnd: string): Promise<void> {
+export async function fetchCallsData(dateStart: string, dateEnd: string) {
 	const url = `${import.meta.env.VITE_APP_CALLS_API_PATH}?date_start=${dateStart}&date_end=${dateEnd}`;
 
 	return await axios
@@ -23,7 +23,7 @@ export async function fetchCallsData(dateStart: string, dateEnd: string): Promis
  * @param recordId - ID of record
  * @param partnershipId - ID of partnership
  */
-export async function fetchRecord(recordId: string, partnershipId: string): Promise<void> {
+export async function fetchRecord(recordId: string, partnershipId: string) {
 	const url = `${import.meta.env.VITE_APP_RECORD_API_PATH}?record=${recordId}&partnership_id=${partnershipId}`;
 
 	return await axios
