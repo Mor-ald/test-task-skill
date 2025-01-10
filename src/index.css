@@ -1,0 +1,27 @@
+@font-face {
+  src:
+          local("SFProDisplayRegular"),
+          url("/src/assets/fonts/SF-Pro-Display-Regular.otf") format("opentype");
+  font-family: SFProDisplayRegular;
+}
+
+:root {
+  font-family: SNProDisplayRegular, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+}
+
+body {
+  margin: 0;
+  padding: 80px 240px 120px;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f1f4f9;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}

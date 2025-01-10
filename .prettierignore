@@ -1,0 +1,26 @@
+# Ignore artifacts:
+dist
+build
+coverage
+public
+
+.idea
+.vscode
+
+# Files
+.env.development
+.env.production
+.env.test
+.eslintrc.json
+.gitignore
+.stylelintrc.json
+commitizen.json
+commitlint.json
+index.html
+jest.config.js
+package.json
+tsconfig.json
+tsconfig.node.json
+vite-env.d.ts
+vite.config.ts
+yarn.lock
