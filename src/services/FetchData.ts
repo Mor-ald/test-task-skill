@@ -11,7 +11,7 @@ export async function fetchCallsData(dateStart: string, dateEnd: string) {
 	return await axios
 		.post(`${url}`, null, {
 			headers: {
-				Authorization: import.meta.env.VITE_APP_TOKEN,
+				Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
 			},
 		})
 		.then((res) => res.data)
@@ -29,7 +29,7 @@ export async function fetchRecord(recordId: string, partnershipId: string) {
 	return await axios
 		.post(`${url}`, null, {
 			headers: {
-				Authorization: import.meta.env.VITE_APP_TOKEN,
+				Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
 				"Content-type": "audio/mpeg, audio/x-mpeg, audio/x-mpeg-3,audio/mpeg3",
 				"Content-Transfer-Encoding": "binary",
 				"Content-Disposition": "filename='record.mp3'",
