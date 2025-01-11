@@ -1,0 +1,111 @@
+.date-picker {
+    position: relative;
+}
+
+.date-picker-title {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.date-picker-title svg:hover path,
+ .date-picker-inputs svg:hover path {
+    fill: var(--text-accent);
+    transition: 0.2s all ease-in;
+}
+
+.date-picker-date {
+    display: flex;
+    align-items: center;
+    margin: 0 12px;
+}
+
+.date-picker-selected {
+    margin-left: 8px;
+    color: var(--text-accent);
+    transition: 0.2s all ease-in;
+}
+
+.date-picker-inputs-container {
+    padding: 6px 21px 0;
+    font-family: SNProDisplayRegular, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 200%;
+    color: var(--text-primary);
+    transition: 0.2s ease-in;
+}
+
+.date-picker-inputs {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 21px;
+    color: var(--primary-gray);
+    cursor: default;
+}
+
+.date-picker-inputs div {
+    display: flex;
+}
+
+.date-picker-inputs:hover {
+    background: white;
+}
+
+.date-picker-input {
+    border: 0;
+    padding: 0;
+    width: 58px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--primary-gray);
+}
+
+.date-picker-input::placeholder {
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--primary-gray);
+}
+
+.date-picker-input:focus {
+    outline: none;
+}
+
+.date-picker-dropdown {
+    position: absolute;
+    z-index: 10;
+    margin-top: 12px;
+    border: 1px solid #eaf0fa;
+    border-radius: 4px;
+    width: 204px;
+    max-height: 237px;
+    background: white;
+}
+
+.date-picker-dropdown > div {
+    padding: 6px 21px;
+    font-family: SNProDisplayRegular, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 200%;
+    color: var(--text-primary);
+    transition: 0.2s ease-in;
+    cursor: pointer;
+}
+
+.date-picker-dropdown > div:hover {
+    background: var(--background-hover);
+}
+
+.date-picker-dropdown .disable {
+    color: var(--text-header);
+    cursor: default;
+}
+
+.date-picker-dropdown .disable:hover {
+    background: white;
+}
+
+.date-picker-dropdown .active {
+    color: var(--text-dropdown-blue);
+}
