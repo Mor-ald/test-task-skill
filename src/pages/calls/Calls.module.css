@@ -1,4 +1,8 @@
-.filter-container {
+.filters-container {
     display: flex;
     justify-content: space-between;
+}
+
+.filters-call {
+    display: flex;
 }
