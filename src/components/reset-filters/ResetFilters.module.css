@@ -1,0 +1,25 @@
+.disable-filters {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.disable-filters span {
+    padding-right: 4px;
+    transition: 0.2s all ease-in;
+}
+
+.disable-filters-icon {
+    transition: 0.2s all ease-in;
+}
+
+.disable-filters:hover span {
+    color: var(--text-accent);
+}
+
+.disable-filters:hover .disable-filters-icon {
+    fill: var(--text-accent);
+}
