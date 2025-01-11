@@ -1,0 +1,88 @@
+.table {
+	width: 100%;
+}
+
+.table-sort {
+	display: flex;
+	align-items: center;
+}
+
+.table-sort div {
+	margin-right: 4px;
+}
+
+.table-thead > tr > th {
+	border-bottom: 1px solid #eaf0fa;
+	padding: 0 0 20px;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 148%;
+	text-align: left;
+	color: var(--text-secondary);
+}
+
+.table-thead > tr > th:last-child div {
+	justify-content: end;
+	padding-right: 16px;
+}
+
+.table-type-cell {
+	min-width: calc(5400% / 1400%);
+}
+
+.table-date-cell {
+	min-width: calc(8800% / 1400%);
+}
+
+.table-avatar-cell {
+	min-width: calc(12900% / 1400%);
+}
+
+.table-call-cell {
+	min-width: calc(32500% / 1400%);
+}
+
+.table-source-cell {
+	min-width: calc(21400% / 1400%);
+}
+
+.table-eval-cell {
+	min-width: calc(46100% / 1400%);
+}
+
+.table-time-cell {
+	min-width: calc(11000% / 1400%);
+}
+
+.table-tbody > tr > td {
+	border-bottom: 1px solid #eaf0fa;
+	padding: 16px 0;
+	font-weight: 400;
+	font-size: 15px;
+	line-height: 140%;
+	color: var(--text-primary);
+}
+
+.table-tbody > tr > td:last-child {
+	padding-right: 40px;
+	text-align: right;
+}
+
+.table-tbody > tr > td > img {
+	height: 32px;
+}
+
+.table-tbody > .table-date-row td:last-child {
+	padding-right: 0;
+	width: 100%;
+	text-align: left;
+}
+
+.table-tbody > .table-date-row td:last-child sup {
+	font-size: 12px;
+	color: #899cb1;
+}
+
+.call-cell-content-secondary {
+	color: var(--text-secondary);
+}
