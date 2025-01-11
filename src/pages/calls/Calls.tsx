@@ -1,9 +1,14 @@
+import styles from "./Calls.module.css";
+
 import { observer } from "mobx-react-lite";
 import { FC, useCallback, useEffect, useState } from "react";
 import CallsStore from "./CallsStore.ts";
 import { fetchCallsData } from "../../services/FetchData.ts";
 import getDatesByInterval from "../../utils/GetDatesByInterval.ts";
 import { toJS } from "mobx";
+import TypeSelector from "../../components/type-selector/TypeSelector.tsx";
+import ResetFilters from "../../components/reset-filters/ResetFilters.tsx";
+import DatePicker from "../../components/date-picker/DatePicker.tsx";
 
 /**
  * Calls page
@@ -25,7 +30,15 @@ const Calls: FC = observer(() => {
 
 	return (
 		<div>
-			<div className={"filter-container"}></div>
+			<div className={styles["filters-container"]}>
+				<div className={styles["filters-call"]}>
+					<TypeSelector value={toJS(store.selectedCallType)} onChangeValue={store.onChangeCallType} />
+					<ResetFilters value={toJS(store.selectedCallType)} onChangeValue={store.onChangeCallType} />
+				</div>
+				<div>
+					<DatePicker value={toJS(store.selectedDatesInterval)} onChangeValue={store.onChangeDatesInterval} />
+				</div>
+			</div>
 			<div className={"table-container"}></div>
 		</div>
 	);
