@@ -9,6 +9,7 @@ import { toJS } from "mobx";
 import TypeSelector from "../../components/type-selector/TypeSelector.tsx";
 import ResetFilters from "../../components/reset-filters/ResetFilters.tsx";
 import DatePicker from "../../components/date-picker/DatePicker.tsx";
+import Table from "../../components/table/Table.tsx";
 
 /**
  * Calls page
@@ -29,7 +30,7 @@ const Calls: FC = observer(() => {
 	}, [loadData]);
 
 	return (
-		<div>
+		<div className={styles["calls"]}>
 			<div className={styles["filters-container"]}>
 				<div className={styles["filters-call"]}>
 					<TypeSelector value={toJS(store.selectedCallType)} onChangeValue={store.onChangeCallType} />
@@ -39,7 +40,9 @@ const Calls: FC = observer(() => {
 					<DatePicker value={toJS(store.selectedDatesInterval)} onChangeValue={store.onChangeDatesInterval} />
 				</div>
 			</div>
-			<div className={"table-container"}></div>
+			<div className={styles["table-container"]}>
+				{toJS(store.callsAPIData) ? <Table callsApiData={toJS(store.callsAPIData!)} callType={toJS(store.selectedCallType)} /> : <div>Загрузка...</div>}
+			</div>
 		</div>
 	);
 });
