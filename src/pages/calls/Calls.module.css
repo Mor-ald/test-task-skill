@@ -1,8 +1,22 @@
+.calls {
+	margin: 0 auto;
+	width: 75%;
+}
+
 .filters-container {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .filters-call {
-    display: flex;
+	display: flex;
+}
+
+.table-container {
+	overflow-x: scroll;
+	margin-top: 16px;
+	border-radius: 8px;
+	padding: 24px 0 52px 40px;
+	box-shadow: 0 4px 5px 0 #e9edf3;
+	background: white;
 }
