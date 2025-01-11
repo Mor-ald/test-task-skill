@@ -1,0 +1,26 @@
+.ev-3 {
+	border: 1px solid var(--primary-red);
+	border-radius: 4px;
+	padding: 6px 8px;
+	text-align: center;
+	color: var(--primary-red);
+	background: var(--light-red);
+}
+
+.ev-4 {
+	border: 1px solid var(--primary-gray);
+	border-radius: 4px;
+	padding: 6px 8px;
+	text-align: center;
+	color: var(--text-primary);
+	background: var(--light-gray);
+}
+
+.ev-5 {
+	border: 1px solid var(--primary-green);
+	border-radius: 4px;
+	padding: 6px 8px;
+	text-align: center;
+	color: var(--primary-green);
+	background: var(--light-green);
+}
