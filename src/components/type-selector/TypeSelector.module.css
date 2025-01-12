@@ -2,34 +2,6 @@
     position: relative;
 }
 
-.select-title {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.select-selected {
-    padding-right: 4px;
-    color: var(--text-secondary);
-    transition: 0.2s all ease-in;
-}
-
-.select-selected-active {
-    padding-right: 4px;
-    color: #1f46fb;
-    transition: 0.2s all ease-in;
-}
-
-.select-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.select-title:hover .select-selected {
-    color: var(--text-accent);
-}
-
 .select-dropdown {
     position: absolute;
     z-index: 10;
