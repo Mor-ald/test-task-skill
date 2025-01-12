@@ -21,7 +21,7 @@ const Calls: FC = observer(() => {
 	// Load calls data
 	const loadData = useCallback(async () => {
 		const [sD, eD] = getDatesByInterval(toJS(store.selectedDatesInterval));
-		const data = await fetchCallsData(sD, eD);
+		const data = await fetchCallsData(sD, eD, toJS(store.sortByDate), toJS(store.sortByDuration));
 
 		store.onChangeData(data);
 	}, [store]);
@@ -34,6 +34,18 @@ const Calls: FC = observer(() => {
 		},
 		[loadData, store],
 	);
+
+	// Sort by date
+	const onSortByDate = useCallback(() => {
+		store.onToggleSortByDate();
+		loadData().then();
+	}, [loadData, store]);
+
+	// Sort by date
+	const onSortByDuration = useCallback(() => {
+		store.onToggleSortByDuration();
+		loadData().then();
+	}, [loadData, store]);
 
 	useEffect(() => {
 		loadData().then();
@@ -51,7 +63,18 @@ const Calls: FC = observer(() => {
 				</div>
 			</div>
 			<div className={styles["table-container"]}>
-				{toJS(store.callsAPIData) ? <Table callsApiData={toJS(store.callsAPIData!)} callType={toJS(store.selectedCallType)} /> : <div>Загрузка...</div>}
+				{toJS(store.callsAPIData) ? (
+					<Table
+						callsApiData={toJS(store.callsAPIData!)}
+						callType={toJS(store.selectedCallType)}
+						sortByDate={toJS(store.sortByDate)}
+						sortByDuration={toJS(store.sortByDuration)}
+						onToggleSortByDate={onSortByDate}
+						onToggleSortByDuration={onSortByDuration}
+					/>
+				) : (
+					<div>Загрузка...</div>
+				)}
 			</div>
 		</div>
 	);
