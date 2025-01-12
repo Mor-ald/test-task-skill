@@ -9,7 +9,12 @@ import createDate from "../../utils/CreateDate";
 import { toJS } from "mobx";
 import Evaluation from "../evaluation/Evaluation";
 import ActionButton from "../action-button/ActionButton.tsx";
+import AudioPlayer from "../audio-player/AudioPlayer.tsx";
+import formatTime from "../../utils/FormatTime.ts";
 
+/**
+ * Table component
+ */
 const Table: FC<ITable> = observer(({ callsApiData, callType, sortByDate, sortByDuration, onToggleSortByDate, onToggleSortByDuration }) => {
 	const [store] = useState(() => TableStore);
 
@@ -101,20 +106,39 @@ const Table: FC<ITable> = observer(({ callsApiData, callType, sortByDate, sortBy
 		);
 	}, []);
 
-	const EvaluationCell = useCallback(() => {
-		const randomNumber = Math.floor(Math.random() * 3) + 3; // from 3 to 5
+	const EvaluationCell = useCallback(({ i }: { i: number }) => {
+		let value = 3;
+
+		if (i % 3 === 0) value = 3;
+		if (i % 4 === 0) value = 4;
+		if (i % 5 === 0) value = 5;
 
 		return (
 			<td>
-				<Evaluation value={randomNumber as 3 | 4 | 5} />
+				<Evaluation value={value as 3 | 4 | 5} />
 			</td>
 		);
 	}, []);
 
-	const CallTimeCell = useCallback(({ item }: { item: TableItem }) => {
-		const min = `${Math.floor(item.time / 60)}`;
-		const sec = item.time % 60 < 10 ? `0${item.time % 60}` : `${item.time % 60}`;
-		return <td>{min + ":" + sec}</td>;
+	const CallTimeCell = useCallback(({ item, audioVisible }: { item: TableItem; audioVisible: boolean }) => {
+		const fT = formatTime(item.time);
+
+		if (item.record && item.partnership_id) {
+			return (
+				<td>
+					<div hidden={audioVisible}>{fT}</div>
+					<div className={styles["table-audio"]} hidden={!audioVisible}>
+						<AudioPlayer recordId={item.record} partnershipId={item.partnership_id} time={item.time} />
+					</div>
+				</td>
+			);
+		} else {
+			return (
+				<td>
+					<div className={"table-call-cell-duration"}>{fT}</div>
+				</td>
+			);
+		}
 	}, []);
 
 	/**
@@ -143,6 +167,25 @@ const Table: FC<ITable> = observer(({ callsApiData, callType, sortByDate, sortBy
 			</thead>
 		);
 	}, [onToggleSortByDate, onToggleSortByDuration, sortByDate, sortByDuration]);
+
+	const TableTBodyTr = useCallback(
+		({ item, i }: { item: TableItem; i: number }) => {
+			const [audioVisible, setAudioVisible] = useState(false);
+
+			return (
+				<tr className={styles["table-tbody-tr"]} onMouseEnter={() => setAudioVisible(true)} onMouseLeave={() => setAudioVisible(false)}>
+					<TypeCell item={item} />
+					<DateCell item={item} />
+					<AvatarCell item={item} />
+					<CallCell item={item} />
+					<SourceCell item={item} />
+					<EvaluationCell i={i} />
+					<CallTimeCell item={item} audioVisible={audioVisible} />
+				</tr>
+			);
+		},
+		[AvatarCell, CallCell, CallTimeCell, DateCell, EvaluationCell, SourceCell, TypeCell],
+	);
 
 	/**
 	 * Tbody of table
@@ -179,22 +222,14 @@ const Table: FC<ITable> = observer(({ callsApiData, callType, sortByDate, sortBy
 								</tr>
 							)}
 							{items.map((item) => (
-								<tr key={item.id}>
-									<TypeCell item={item} />
-									<DateCell item={item} />
-									<AvatarCell item={item} />
-									<CallCell item={item} />
-									<SourceCell item={item} />
-									<EvaluationCell />
-									<CallTimeCell item={item} />
-								</tr>
+								<TableTBodyTr key={item.id} item={item} i={i} />
 							))}
 						</Fragment>
 					);
 				})}
 			</tbody>
 		);
-	}, [AvatarCell, CallCell, CallTimeCell, DateCell, EvaluationCell, SourceCell, TypeCell, store.data]);
+	}, [TableTBodyTr, store.data]);
 
 	return (
 		<table className={styles["table"]}>
