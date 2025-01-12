@@ -10,6 +10,7 @@ import TypeSelector from "../../components/type-selector/TypeSelector.tsx";
 import ResetFilters from "../../components/reset-filters/ResetFilters.tsx";
 import DatePicker from "../../components/date-picker/DatePicker.tsx";
 import Table from "../../components/table/Table.tsx";
+import { DatesInterval } from "../../ts/DatesInterval.ts";
 
 /**
  * Calls page
@@ -25,6 +26,15 @@ const Calls: FC = observer(() => {
 		store.onChangeData(data);
 	}, [store]);
 
+	// Update data when select new interval
+	const onPickNewDatesInterval = useCallback(
+		(interval: DatesInterval) => {
+			store.onChangeDatesInterval(interval);
+			loadData().then();
+		},
+		[loadData, store],
+	);
+
 	useEffect(() => {
 		loadData().then();
 	}, [loadData]);
@@ -37,7 +47,7 @@ const Calls: FC = observer(() => {
 					<ResetFilters value={toJS(store.selectedCallType)} onChangeValue={store.onChangeCallType} />
 				</div>
 				<div>
-					<DatePicker value={toJS(store.selectedDatesInterval)} onChangeValue={store.onChangeDatesInterval} />
+					<DatePicker value={toJS(store.selectedDatesInterval)} onChangeValue={onPickNewDatesInterval} />
 				</div>
 			</div>
 			<div className={styles["table-container"]}>
