@@ -97,15 +97,10 @@
     background: var(--background-hover);
 }
 
-.date-picker-dropdown .disable {
+.date-picker-dropdown .dropdown-default {
     color: var(--text-header);
-    cursor: default;
 }
 
-.date-picker-dropdown .disable:hover {
-    background: white;
-}
-
-.date-picker-dropdown .active {
+.date-picker-dropdown .dropdown-active {
     color: var(--text-dropdown-blue);
 }
