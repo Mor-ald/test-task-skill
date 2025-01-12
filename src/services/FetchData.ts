@@ -4,9 +4,14 @@ import axios from "axios";
  * Fetch calls from API (from dateStart to dateEnd)
  * @param dateStart - Fetch from this date (YYYY-MM-DD)
  * @param dateEnd - Fetch to this date (YYYY-MM-DD)
+ * @param sortByDate - Sort data by date
+ * @param sortByDuration - Sort bata by duration
  */
-export async function fetchCallsData(dateStart: string, dateEnd: string) {
-	const url = `${import.meta.env.VITE_APP_CALLS_API_PATH}?date_start=${dateStart}&date_end=${dateEnd}`;
+export async function fetchCallsData(dateStart: string, dateEnd: string, sortByDate: boolean, sortByDuration: boolean) {
+	let url = `${import.meta.env.VITE_APP_CALLS_API_PATH}?date_start=${dateStart}&date_end=${dateEnd}`;
+
+	if (sortByDate) url += `&sort_by=date`;
+	if (sortByDuration) url += `&sort_by=duration`;
 
 	return await axios
 		.post(`${url}`, null, {
