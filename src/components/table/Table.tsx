@@ -2,14 +2,15 @@ import styles from "./Table.module.css";
 
 import { observer } from "mobx-react-lite";
 import { ITable } from "./ITable";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
 import TableStore from "./TableStore";
 import { TableItem } from "../../ts/TableData";
 import createDate from "../../utils/CreateDate";
 import { toJS } from "mobx";
 import Evaluation from "../evaluation/Evaluation";
+import ActionButton from "../action-button/ActionButton.tsx";
 
-const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
+const Table: FC<ITable> = observer(({ callsApiData, callType, sortByDate, sortByDuration, onToggleSortByDate, onToggleSortByDuration }) => {
 	const [store] = useState(() => TableStore);
 
 	useEffect(() => {
@@ -28,21 +29,6 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 			}
 		}
 	}, [callType, callsApiData.results, store]);
-
-	const ArrowDown = useCallback(() => {
-		return (
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<g clipPath="url(#clip0_1_863)">
-					<path opacity="0.8" d="M7.41 8.58997L12 13.17L16.59 8.58997L18 9.99997L12 16L6 9.99997L7.41 8.58997Z" fill="#ADBFDF" />
-				</g>
-				<defs>
-					<clipPath id="clip0_1_863">
-						<rect width="24" height="24" fill="white" />
-					</clipPath>
-				</defs>
-			</svg>
-		);
-	}, []);
 
 	const TypeCell = useCallback(({ item }: { item: TableItem }) => {
 		switch (item.in_out) {
@@ -75,11 +61,14 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 	}, []);
 
 	const AvatarCell = useCallback(({ item }: { item: TableItem }) => {
-		return (
-			<td>
-				<img src={item.person_avatar} alt="avatar" />
-			</td>
-		);
+		if (item.person_avatar) {
+			return (
+				<td>
+					<img src={item.person_avatar} alt="avatar" />
+				</td>
+			);
+		}
+		return <td></td>;
 	}, []);
 
 	const CallCell = useCallback(({ item }: { item: TableItem }) => {
@@ -89,7 +78,19 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 		if (item.contact_company) content.push(item.contact_company);
 		if (item.from_number) content.push(item.from_number);
 
-		return <td>{content.map((c, i) => (i === 0 ? <div>{c}</div> : <div className={styles["content-secondary"]}>{c}</div>))}</td>;
+		return (
+			<td>
+				{content.map((c, i) =>
+					i === 0 ? (
+						<div key={i}>{c}</div>
+					) : (
+						<div key={i} className={styles["content-secondary"]}>
+							{c}
+						</div>
+					),
+				)}
+			</td>
+		);
 	}, []);
 
 	const SourceCell = useCallback(({ item }: { item: TableItem }) => {
@@ -125,35 +126,34 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 				<tr>
 					<th className={styles["table-type-cell"]}>Тип</th>
 					<th className={styles["table-date-cell"]}>
-						<div className={styles["table-sort"]}>
-							Время
-							<ArrowDown />
-						</div>
+						<span onClick={onToggleSortByDate}>
+							<ActionButton active={sortByDate}>Время</ActionButton>
+						</span>
 					</th>
 					<th className={styles["table-avatar-cell"]}>Сотрудник</th>
 					<th className={styles["table-call-cell"]}>Звонок</th>
 					<th className={styles["table-source-cell"]}>Источник</th>
 					<th className={styles["table-eval-cell"]}>Оценка</th>
 					<th className={styles["table-time-cell"]}>
-						<div className={styles["table-sort"]}>
-							Длительность
-							<ArrowDown />
-						</div>
+						<span onClick={onToggleSortByDuration}>
+							<ActionButton active={sortByDuration}>Длительность</ActionButton>
+						</span>
 					</th>
 				</tr>
 			</thead>
 		);
-	}, [ArrowDown]);
+	}, [onToggleSortByDate, onToggleSortByDuration, sortByDate, sortByDuration]);
 
 	/**
 	 * Tbody of table
 	 */
 	const TableTBody = useCallback(() => {
 		const dateNow = new Date();
-		dateNow.setDate(dateNow.getDate() - 1); // yesterday
-		const strDateY = createDate(dateNow);
-		dateNow.setDate(dateNow.getDate() - 1); // two days ago
-		const strDateTDA = createDate(dateNow);
+		const strDateT = createDate(dateNow); // today
+		dateNow.setDate(dateNow.getDate() - 1);
+		const strDateY = createDate(dateNow); // yesterday
+		dateNow.setDate(dateNow.getDate() - 1);
+		const strDateTDA = createDate(dateNow); // two days ago
 
 		const dates = Array.from(new Set(toJS(store.data).map((item) => item.date_notime)));
 
@@ -162,14 +162,18 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 				{dates.map((d, i) => {
 					const items = toJS(store.data).filter((item) => item.date_notime === d);
 					const itemsQuantity = items.length;
-					const date = d === strDateY ? "Вчера" : d === strDateTDA ? "Позавчера" : d;
+					let dateText = d;
+
+					if (d === strDateT) dateText = "Сегодня";
+					if (d === strDateY) dateText = "Вчера";
+					if (d === strDateTDA) dateText = "Позавчера";
 
 					return (
-						<>
+						<Fragment key={d + i}>
 							{i !== 0 && (
 								<tr className={styles["table-date-row"]}>
 									<td colSpan={7}>
-										<span>{date}</span>
+										<span>{dateText}</span>
 										<sup>{itemsQuantity}</sup>
 									</td>
 								</tr>
@@ -185,7 +189,7 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 									<CallTimeCell item={item} />
 								</tr>
 							))}
-						</>
+						</Fragment>
 					);
 				})}
 			</tbody>
