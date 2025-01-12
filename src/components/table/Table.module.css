@@ -1,4 +1,5 @@
 .table {
+	border-collapse: collapse;
 	width: 100%;
 }
 
@@ -18,31 +19,31 @@
 }
 
 .table-type-cell {
-	min-width: calc(5400% / 1400);
+	width: 54px;
 }
 
 .table-date-cell {
-	min-width: calc(8800% / 1400);
+	width: 88px;
 }
 
 .table-avatar-cell {
-	min-width: calc(12900% / 1400);
+	width: 129px;
 }
 
 .table-call-cell {
-	min-width: calc(32500% / 1400);
+	width: 325px;
 }
 
 .table-source-cell {
-	min-width: calc(21400% / 1400);
+	width: 214px;
 }
 
 .table-eval-cell {
-	min-width: calc(46100% / 1400);
+	width: 461px;
 }
 
 .table-time-cell {
-	min-width: calc(11000% / 1400);
+	width: 110px;
 }
 
 .table-tbody > tr > td {
@@ -72,6 +73,19 @@
 .table-tbody > .table-date-row td:last-child sup {
 	font-size: 12px;
 	color: #899cb1;
+}
+
+.table-tbody-tr {
+	transition: 0.2s all ease-in;
+	cursor: pointer;
+}
+
+.table-tbody-tr:hover {
+	background: rgba(212, 223, 243, 17%);
+}
+
+.table-audio {
+	position: relative;
 }
 
 .content-secondary {
