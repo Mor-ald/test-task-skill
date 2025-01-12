@@ -6,8 +6,8 @@ import createDate from "./CreateDate.ts";
  * @param interval - Interval of dates ("3 days" | "weak" | "month" | "year" | [YYYY-MM-DD, YYYY-MM-DD])
  */
 export default function getDatesByInterval(interval: DatesInterval) {
-	let startDate = "";
-	let endDate = "";
+	let startDate;
+	let endDate;
 	const date = new Date();
 
 	const getStartDate = (days: number) => {
@@ -27,11 +27,21 @@ export default function getDatesByInterval(interval: DatesInterval) {
 			startDate = createDate(getStartDate(6));
 			break;
 		}
+		case "month": {
+			endDate = createDate(date);
+			startDate = createDate(getStartDate(30));
+			break;
+		}
+		case "year": {
+			endDate = createDate(date);
+			startDate = createDate(getStartDate(365));
+			break;
+		}
 		default: {
 			endDate = createDate(new Date(interval[1]));
 			startDate = createDate(new Date(interval[0]));
 		}
 	}
-
+	console.log([startDate, endDate]);
 	return [startDate, endDate];
 }
