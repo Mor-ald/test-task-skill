@@ -42,6 +42,6 @@ export default function getDatesByInterval(interval: DatesInterval) {
 			startDate = createDate(new Date(interval[0]));
 		}
 	}
-	console.log([startDate, endDate]);
+
 	return [startDate, endDate];
 }
