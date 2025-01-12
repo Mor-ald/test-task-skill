@@ -2,15 +2,6 @@
 	width: 100%;
 }
 
-.table-sort {
-	display: flex;
-	align-items: center;
-}
-
-.table-sort div {
-	margin-right: 4px;
-}
-
 .table-thead > tr > th {
 	border-bottom: 1px solid #eaf0fa;
 	padding: 0 0 20px;
