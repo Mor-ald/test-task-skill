@@ -18,6 +18,8 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 	const onSelect = useCallback(
 		(value: DatesInterval) => {
 			onChangeValue(value);
+			store.onChangeDateStart("");
+			store.onChangeDateEnd("");
 			store.onChangeFocus(false);
 		},
 		[onChangeValue, store],
@@ -49,6 +51,22 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 		},
 		[formatDateValue, store],
 	);
+
+	// Update dates interval
+	const updateDatesInterval = useCallback(() => {
+		const sD = toJS(store.dateStart);
+		const eD = toJS(store.dateEnd);
+
+		if (sD && eD && sD.length === 8 && eD.length === 8) {
+			const formatSD = sD.split(".");
+			formatSD[formatSD.length - 1] = "20" + formatSD[formatSD.length - 1];
+			const formatED = eD.split(".");
+			formatED[formatED.length - 1] = "20" + formatED[formatED.length - 1];
+
+			onChangeValue([formatSD.reverse().join("-"), formatED.reverse().join("-")]);
+			store.onChangeFocus(!toJS(store.isFocused));
+		}
+	}, [onChangeValue, store]);
 
 	// Title text of date picker
 	const DatePickerTitleText = useCallback(() => {
@@ -123,6 +141,7 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 									placeholder="__.__.__"
 									value={toJS(store.dateStart)}
 									onChange={onChangeStartDateValue}
+									onBlur={updateDatesInterval}
 								/>
 								-
 								<input
@@ -131,6 +150,7 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 									placeholder="__.__.__"
 									value={toJS(store.dateEnd)}
 									onChange={onChangeEndDateValue}
+									onBlur={updateDatesInterval}
 								/>
 							</div>
 							<div>
