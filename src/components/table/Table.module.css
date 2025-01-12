@@ -27,31 +27,31 @@
 }
 
 .table-type-cell {
-	min-width: calc(5400% / 1400%);
+	min-width: calc(5400% / 1400);
 }
 
 .table-date-cell {
-	min-width: calc(8800% / 1400%);
+	min-width: calc(8800% / 1400);
 }
 
 .table-avatar-cell {
-	min-width: calc(12900% / 1400%);
+	min-width: calc(12900% / 1400);
 }
 
 .table-call-cell {
-	min-width: calc(32500% / 1400%);
+	min-width: calc(32500% / 1400);
 }
 
 .table-source-cell {
-	min-width: calc(21400% / 1400%);
+	min-width: calc(21400% / 1400);
 }
 
 .table-eval-cell {
-	min-width: calc(46100% / 1400%);
+	min-width: calc(46100% / 1400);
 }
 
 .table-time-cell {
-	min-width: calc(11000% / 1400%);
+	min-width: calc(11000% / 1400);
 }
 
 .table-tbody > tr > td {
@@ -83,6 +83,6 @@
 	color: #899cb1;
 }
 
-.call-cell-content-secondary {
+.content-secondary {
 	color: var(--text-secondary);
 }
