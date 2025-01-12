@@ -1,0 +1,12 @@
+.action-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.action-button-content {
+    padding-right: 4px;
+    color: var(--text-secondary);
+    transition: 0.2s all ease-in;
+}
