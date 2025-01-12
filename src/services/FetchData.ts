@@ -29,16 +29,19 @@ export async function fetchCallsData(dateStart: string, dateEnd: string, sortByD
  * @param partnershipId - ID of partnership
  */
 export async function fetchRecord(recordId: string, partnershipId: string) {
-	const url = `${import.meta.env.VITE_APP_RECORD_API_PATH}?record=${recordId}&partnership_id=${partnershipId}`;
-
 	return await axios
-		.post(`${url}`, null, {
+		.post(`${import.meta.env.VITE_APP_RECORD_API_PATH}`, null, {
 			headers: {
 				Authorization: `Bearer ${import.meta.env.VITE_APP_TOKEN}`,
-				"Content-type": "audio/mpeg, audio/x-mpeg, audio/x-mpeg-3,audio/mpeg3",
+				"Content-type": "audio-player/mpeg, audio-player/x-mpeg, audio-player/x-mpeg-3,audio-player/mpeg3",
 				"Content-Transfer-Encoding": "binary",
 				"Content-Disposition": "filename='record.mp3'",
 			},
+			params: {
+				record: recordId,
+				partnership_id: partnershipId,
+			},
+			responseType: "blob",
 		})
 		.then((res) => res.data)
 		.catch((e) => console.log(e));
