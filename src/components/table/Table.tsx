@@ -89,11 +89,15 @@ const Table: FC<ITable> = observer(({ callsApiData, callType }) => {
 		if (item.contact_company) content.push(item.contact_company);
 		if (item.from_number) content.push(item.from_number);
 
-		return <td>{content.map((c, i) => (i === 0 ? <div>{c}</div> : <div className={styles["call-cell-content-secondary"]}>{c}</div>))}</td>;
+		return <td>{content.map((c, i) => (i === 0 ? <div>{c}</div> : <div className={styles["content-secondary"]}>{c}</div>))}</td>;
 	}, []);
 
 	const SourceCell = useCallback(({ item }: { item: TableItem }) => {
-		return <td>{item.source}</td>;
+		return (
+			<td>
+				<div className={styles["content-secondary"]}>{item.source}</div>
+			</td>
+		);
 	}, []);
 
 	const EvaluationCell = useCallback(() => {
