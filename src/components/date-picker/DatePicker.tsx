@@ -25,13 +25,33 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 		[onChangeValue, store],
 	);
 
+	const onSwitchPrev = useCallback(() => {
+		const prev = {
+			"3 days": "year",
+			weak: "3 days",
+			month: "weak",
+			year: "month",
+		};
+		if (typeof value === "string") onChangeValue(prev[value] as DatesInterval);
+	}, [onChangeValue, value]);
+
+	const onSwitchNext = useCallback(() => {
+		const next = {
+			"3 days": "weak",
+			weak: "month",
+			month: "year",
+			year: "3 days",
+		};
+		if (typeof value === "string") onChangeValue(next[value] as DatesInterval);
+	}, [onChangeValue, value]);
+
 	// Format date value
 	const formatDateValue = useCallback((value: string) => {
 		return value
-			.replace(/[^0-9]/g, "") // Удаляем все нецифровые символы
-			.replace(/(\d{2})(\d)/, "$1.$2") // Добавляем точку после дня
-			.replace(/(\d{2})\.(\d{2})(\d)/, "$1.$2.$3") // Добавляем точку после месяца
-			.substring(0, 8); // Ограничиваем ввод до 10 символов (dd.mm.yy)
+			.replace(/[^0-9]/g, "")
+			.replace(/(\d{2})(\d)/, "$1.$2")
+			.replace(/(\d{2})\.(\d{2})(\d)/, "$1.$2.$3")
+			.substring(0, 8);
 	}, []);
 
 	// On change start date value
@@ -84,7 +104,7 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 			<span ref={titleRef}>
 				<div className={styles["date-picker-title"]}>
 					{/* Left arrow */}
-					<svg width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg onClick={onSwitchPrev} width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g clipPath="url(#clip0_9028_1441)">
 							<path d="M6.175 15.825L2.35833 12L6.175 8.175L5 7L0 12L5 17L6.175 15.825Z" fill="#ADBFDF" />
 						</g>
@@ -107,7 +127,7 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 					</div>
 
 					{/* Right arrow	*/}
-					<svg width="17" height="24" viewBox="0 0 17 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg onClick={onSwitchNext} width="17" height="24" viewBox="0 0 17 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g clipPath="url(#clip0_9028_1447)">
 							<path d="M9.58997 15.825L13.4066 12L9.58997 8.175L10.765 7L15.765 12L10.765 17L9.58997 15.825Z" fill="#ADBFDF" />
 						</g>
@@ -123,14 +143,18 @@ const DatePicker: FC<IDatePicker> = observer(({ value, onChangeValue }) => {
 			{/* DropDown */}
 			{toJS(store.isFocused) && (
 				<div className={styles["date-picker-dropdown"]}>
-					<div className={styles[value === "3 days" ? "active" : ""]} onClick={() => onSelect("3 days")}>
+					<div className={styles[value === "3 days" ? "dropdown-active" : "dropdown-default"]} onClick={() => onSelect("3 days")}>
 						3 дня
 					</div>
-					<div className={styles[value === "weak" ? "active" : ""]} onClick={() => onSelect("weak")}>
+					<div className={styles[value === "weak" ? "dropdown-active" : "dropdown-default"]} onClick={() => onSelect("weak")}>
 						Неделя
 					</div>
-					<div className={styles["disable"]}>Месяц</div>
-					<div className={styles["disable"]}>Год</div>
+					<div className={styles[value === "month" ? "dropdown-active" : "dropdown-default"]} onClick={() => onSelect("month")}>
+						Месяц
+					</div>
+					<div className={styles[value === "year" ? "dropdown-active" : "dropdown-default"]} onClick={() => onSelect("year")}>
+						Год
+					</div>
 					<span className={styles["date-picker-inputs-container"]}>
 						<span>Указать даты</span>
 						<div className={styles["date-picker-inputs"]}>
